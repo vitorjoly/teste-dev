@@ -20,7 +20,7 @@ class CreateArtigosTable extends Migration
             $table->string('link', 255);
             $table->integer('ano');
             $table->string('combustivel', 255);
-            $table->integer('portas');
+            $table->string('portas', 255);
             $table->string('quilometragem', 255);
             $table->string('cambio', 255);
             $table->string('cor', 255);

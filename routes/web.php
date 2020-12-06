@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BasicController;
+use App\Http\Controllers\CapturaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +14,18 @@ use App\Http\Controllers\BasicController;
 |
 */
 
+    //Rota de captura das informacoes no campo captura
+    Route::get('/formulario-captura', function() {
+        return view('?????');
+    });
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function() {
-      return view ('home');
-});
-
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    //Rota da visualizacao do historico
+Route::get('/historico', [CapturaController::class, 'historico'])->name('historico');
+    //Rota de captura de informacoes
+Route::post('/captura', [CapturaController::class, 'captura'])->name('captura');
