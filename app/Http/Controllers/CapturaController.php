@@ -19,23 +19,24 @@ class CapturaController extends Controller
     
     
     public function captura(Request $request) {
-        //valida o termo de busca
+    //valida o termo de busca
         $request->validate([
             'form-captura-input' => 'required',
         ]);
 
-        
+    //objeto para execucao da consulta
         $quest = new Quest();
 
         $artigos = $quest->executa(Auth::id(), $request->input('form-captura-input'));
         
         Artigos::insert($artigos);
 
-        return redirect()->route('historico');
+        return redirect()->route('historico')->with('msg', 'Captura realizada com sucesso!');
     }
 
+    //Deletar os arquivos
     public function deletar(Artigos $artigo) {
         $artigo->delete();
-        return redirect()->route('historico');
+        return redirect()->route('historico')->with('msg', 'Dados excluidos com sucesso!');
     }
 }

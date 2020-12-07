@@ -2,6 +2,7 @@
 
 namespace App\Crawler;
 
+//Classe da execucao da consulta
 class Quest {
     public function executa($userId, $criterio){
         $html=$this->capturaCURL($criterio);
@@ -22,13 +23,13 @@ class Quest {
         return $html;
     }
 
-    //Tratamento da informacao
+    //Filtra as informacoes do card maior
     private function tratar($userId, $html) {
         preg_match_all('/<article\sclass="card\sclearfix"\sid="[^>]+?>(.+?<\/article>)\s/s', $html, $cards);
         
         $cardList = [];
         foreach($cards[0] as $card) {
-            //Filtras informacoes do veiculo
+            //Trata as informacoes do veiculo
             preg_match('/<div\sclass="card__img"[^<]+?<a\shref="(.+?)">/s', $card, $link);
             preg_match('/<h2\sclass="card__title\sui-title-inner"><a\shref="[^<]+?>(.+?)</s', $card, $modeloCarro);
             preg_match('/<span\sclass="card-list__title">\s(.+?[^<]+?)<\/span>.+?<span\sclass="card-list__info">\s(.+?[^<])</s', $card, $ano);
@@ -38,6 +39,7 @@ class Quest {
             preg_match('/(Câmbio:)\s<\/span[^<]+?<span\sclass="[^<]+?>(.+?)<\/span>/s', $card, $cambio);
             preg_match('/(Cor:)\s<\/span[^<]+?<span\sclass="[^<]+?>(.+?)<\/span>/s', $card, $cor);
 
+            //Formata as informacoes apos serem tratadas
             $aux = [
                 'user_id' => $userId,
                 'nome_veiculo' => array_pop($modeloCarro),
@@ -53,7 +55,7 @@ class Quest {
             $cardList[] = $aux;
 
         }
-        
+        //Retorna todas as informacoes necessarias
         return $cardList;
 
     }

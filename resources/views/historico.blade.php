@@ -2,6 +2,16 @@
 
 @section('content')
     <div class="container">
+        <main>
+            <div class="container-fluid">
+                <div class="row">
+                @if(session('msg'))
+                    <p class="msg">{{ session('msg') }}</p>
+                @endif
+                @yield('content')
+                </div>
+            </div>
+        </main>
         <div class="row">
             <div class="col">
                 <table class = "table table-responsive table-hover table-bordered table-striped">
